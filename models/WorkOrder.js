@@ -6,15 +6,21 @@ var Types = keystone.Field.Types;
  * ==========
  */
 
-var WorkOrder = new keystone.List('WorkOrder');
+var WorkOrder = new keystone.List('WorkOrder', {
+	drilldown: 'client'
+});
 
 WorkOrder.add({
-    client: { type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true},
-    description: {type: String, index: true, required: true, initial: true},
-    dropDownField: {type: Types.Select, options: ['1','2']},
-	status: { type: Types.Select, options: ['submitted','approved', 'cancelled', 'closed', 'inprogress'], default: 'submitted'},
-    catalog: {type: Boolean, note: 'Use this Work Order as a Catalogue item?'},
-    catalogLabel: {type: String, dependsOn: {catalog: true}}
+	client: {type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true},
+	description: {type: String, index: true, required: true, initial: true},
+	dropDownField: {type: Types.Select, options: ['1', '2']},
+	status: {
+		type: Types.Select,
+		options: ['submitted', 'approved', 'cancelled', 'closed', 'inprogress'],
+		default: 'submitted'
+	},
+	catalog: {type: Boolean, note: 'Use this Work Order as a Catalogue item?'},
+	catalogLabel: {type: String, dependsOn: {catalog: true}}
 
 });
 
@@ -48,22 +54,35 @@ WorkOrder.schema.methods.sendNotificationEmail = function (callback) {
 	var brand = keystone.get('brand');
 
 	keystone.list('Client').model.findOne({_id: workorder.client}).exec(function (err, client) {
-		console.log('client: ', client)
+
 		if (err) return callback(err);
-		new keystone.Email({
-			templateName: 'workorder-notification',
-			transport: 'mailgun',
-		}).send({
-			to: client.email,
-			from: {
-				name: 'Zusa',
-				email: 'contact@zusa.com',
-			},
-			subject: 'New work order  for Zusa',
-			workorder: workorder,
-			brand: brand,
-			layout: false,
-		}, callback);
+		keystone.list('SiteSetting').model.findOne({name: 'adminEmails'}).exec(function (err, emails) {
+			
+			var to = [{email: client.email, name: client.email}];
+			if (emails) {
+				emails = emails.textValue.split(',');
+				emails.forEach(function (email) {
+					to.push({email: email, name: email})
+				});
+			}
+			console.log('to:', to);
+			if (err) return callback(err);
+			new keystone.Email({
+				templateName: 'workorder-notification',
+				transport: 'mailgun',
+			}).send({
+				to: to,
+				from: {
+					name: 'Zusa',
+					email: 'contact@zusa.com',
+				},
+				subject: 'New work order  for Zusa',
+				workorder: workorder,
+				brand: brand,
+				layout: false,
+			}, callback);
+		});
+
 	});
 };
 

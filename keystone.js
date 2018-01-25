@@ -41,9 +41,11 @@ keystone.set('locals', {
 keystone.set('routes', require('./routes'));
 
 keystone.set('nav', {
-	enquiries: 'enquiries',
-	users: 'users',
+	clients: 'Client',
+	workOrders: 'WorkOrder',
 });
+
+keystone.set('cloudinary config', { cloud_name: 'repn', api_key: '471417893385355', api_secret: '9L0ILe9lSoMwtNhOarFYLLu1z5o' });
 
 
 if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
