@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02fef923-5c50-4bd4-b1da-547437109ba3" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/models/SiteSetting.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/keystone.js" afterPath="$PROJECT_DIR$/keystone.js" />
-      <change beforePath="$PROJECT_DIR$/models/Client.js" afterPath="$PROJECT_DIR$/models/Client.js" />
-      <change beforePath="$PROJECT_DIR$/models/WorkOrder.js" afterPath="$PROJECT_DIR$/models/WorkOrder.js" />
-      <change beforePath="$PROJECT_DIR$/templates/views/layouts/default.hbs" afterPath="$PROJECT_DIR$/templates/views/layouts/default.hbs" />
+      <change beforePath="$PROJECT_DIR$/routes/views/workorder.js" afterPath="$PROJECT_DIR$/routes/views/workorder.js" />
+      <change beforePath="$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs" afterPath="$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -61,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorkOrder.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WorkOrder.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/WorkOrder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="60" column="62" lean-forward="false" selection-start-line="60" selection-start-column="62" selection-end-line="60" selection-end-column="62" />
+            <state relative-caret-position="425">
+              <caret line="49" column="60" lean-forward="true" selection-start-line="49" selection-start-column="60" selection-end-line="49" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -76,16 +73,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="336">
               <caret line="302" column="45" lean-forward="true" selection-start-line="302" selection-start-column="45" selection-end-line="302" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workorder-notification.hbs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/emails/workorder-notification.hbs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -116,8 +103,18 @@
       <file leaf-file-name="workorder.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/views/workorder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+            <state relative-caret-position="425">
+              <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workorder-dom-ready.hbs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="46" lean-forward="false" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -152,7 +149,6 @@
         <option value="$PROJECT_DIR$/templates/views/login.hbs" />
         <option value="$PROJECT_DIR$/templates/views/helpers/index.js" />
         <option value="$PROJECT_DIR$/routes/api/workorder/catalog.js" />
-        <option value="$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs" />
         <option value="$PROJECT_DIR$/templates/views/partials/site-dom-ready.hbs" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/routes/views/contact.js" />
@@ -160,13 +156,14 @@
         <option value="$PROJECT_DIR$/templates/emails/enquiry-notification.hbs" />
         <option value="$PROJECT_DIR$/templates/emails/workorder-notification.hbs" />
         <option value="$PROJECT_DIR$/templates/views/workorder.hbs" />
-        <option value="$PROJECT_DIR$/routes/views/workorder.js" />
         <option value="$PROJECT_DIR$/models/SiteSetting.js" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/templates/views/layouts/default.hbs" />
         <option value="$PROJECT_DIR$/keystone.js" />
         <option value="$PROJECT_DIR$/models/Client.js" />
         <option value="$PROJECT_DIR$/models/WorkOrder.js" />
+        <option value="$PROJECT_DIR$/routes/views/workorder.js" />
+        <option value="$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs" />
       </list>
     </option>
   </component>
@@ -357,7 +354,7 @@
       <updated>1516682624374</updated>
       <workItem from="1516682625692" duration="7908000" />
       <workItem from="1516697117960" duration="4297000" />
-      <workItem from="1516845708743" duration="21247000" />
+      <workItem from="1516845708743" duration="22138000" />
     </task>
     <task id="LOCAL-00001" summary="working catalog items, data inserting into db with validation">
       <created>1516861571760</created>
@@ -370,7 +367,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33452000" />
+    <option name="totallyTimeSpent" value="34343000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="0" width="1897" height="2125" extended-state="4" />
@@ -626,14 +623,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="36" lean-forward="false" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/views/partials/site-dom-ready.hbs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -746,14 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/views/workorder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -806,8 +787,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/WorkOrder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="60" column="62" lean-forward="false" selection-start-line="60" selection-start-column="62" selection-end-line="60" selection-end-column="62" />
+        <state relative-caret-position="425">
+          <caret line="49" column="60" lean-forward="true" selection-start-line="49" selection-start-column="60" selection-end-line="49" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/views/workorder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/views/partials/workorder-dom-ready.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="46" lean-forward="false" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
           <folding />
         </state>
       </provider>

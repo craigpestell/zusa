@@ -27,10 +27,11 @@
 					}
 					
 					$('select[name=catalog]').on('change', function(e){
-						console.log(e);
+						
 						if(e.target.value){
 							//populate form
 							var cat = window.catalog[e.target.value];
+							delete cat.client;
 							// reset form values from json object
 							$.each(cat, function(name, val){
 								var $el = $('[name="'+name+'"]'),

@@ -49,7 +49,7 @@ exports = module.exports = function (req, res) {
 
 		var updater = newWorkOrder.getUpdateHandler(req);
 
-
+		console.log('req.body:', req.body);
 		WorkOrder.updateItem(newWorkOrder, req.body, function () {
 			updater.process(req.body, {
 				flashErrors: true,
