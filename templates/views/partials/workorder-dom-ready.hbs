@@ -1,0 +1,56 @@
+<script type="text/javascript">
+	$(document).ready(function () {
+		var login = function(){
+			//set cookie
+
+			//redirect to work order
+		};
+
+		$('select[name=catalog]').one('focus', function(e){
+			console.log('catalog clicked');
+			
+			$.ajax({
+				url: '/api/catalog',
+				dataType: 'json',
+				success: function (data, status) {
+					console.log('result:', data, 'status:', status);
+					$(this).prop('disabled', 'disabled');
+					var _this = this;
+					if(data.data && data.data.workOrders){
+						window.catalog = {};
+						$.each(data.data.workOrders, function(key, value)
+						{
+							window.catalog[value._id] = value;
+							$('select[name=catalog]').append('<option value=' + value._id + '>' + value.catalogLabel + '</option>');
+						});			
+						$(_this).prop('disabled', false);
+					}
+					
+					$('select[name=catalog]').on('change', function(e){
+						console.log(e);
+						if(e.target.value){
+							//populate form
+							var cat = window.catalog[e.target.value];
+							// reset form values from json object
+							$.each(cat, function(name, val){
+								var $el = $('[name="'+name+'"]'),
+										type = $el.attr('type');
+								console.log('[name="'+name+'"]', $el.length);
+								switch(type){
+									case 'checkbox':
+										$el.attr('checked', 'checked');
+										break;
+									case 'radio':
+										$el.filter('[value="'+val+'"]').attr('checked', 'checked');
+										break;
+									default:
+										$el.val(val);
+								}
+							});
+						}
+					});
+				}
+			});
+		})
+	});
+</script>

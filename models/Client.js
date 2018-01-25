@@ -7,15 +7,15 @@ var Types = keystone.Field.Types;
  */
 
 var Client = new keystone.List('Client',
-    {
-        autokey: { from: 'name', path: 'key', unique: true }, sortable: true
-    });
+	{
+		autokey: {from: 'email', path: 'key', unique: true}, sortable: true
+	});
 
-Client.relationship({ path: 'work-orders', ref: 'WorkOrder', refPath: 'work-orders' });
+Client.relationship({path: 'work-orders', ref: 'WorkOrder', refPath: 'client'});
 Client.add({
-    name: { type: String, required: true, initial: true, index: true },
-    email: { type: Types.Email, initial: true, required: true, index: true },
-    password: { type: Types.Password, initial: true, required: true }
+	username: { type: String, required: true, initial: true, index: true },
+	password: { type: String, initial: true, required: true },
+	email: { type: Types.Email, initial: true, required: true, index: true },
 });
 
 /**

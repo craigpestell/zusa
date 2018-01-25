@@ -1,0 +1,27 @@
+<script type="text/javascript">
+	$(document).ready(function () {
+		var login = function(){
+			//set cookie
+			
+			//redirect to work order
+		};
+		
+		$('#login button').on('click', function(){
+			console.log('login clicked');
+			
+			var data = $('#login').serialize();
+
+			$.ajax({
+				url: '/api/login',
+				type: 'post',
+				dataType: 'json',
+				success: function (data, status) {
+					console.log('result:', data, 'status:', status);
+					document.cookie = "userid=" + data.data.id;
+					window.location.href = '/workorder?clientid=' + data.data.id
+				},
+				data: data
+			});
+		})
+	});
+</script>
