@@ -6,6 +6,7 @@
 		<div class="col-sm-8 col-md-6">
 			{{#if workOrderSubmitted}}
 				<h3>Work Order submitted.</h3>
+				<p>A confirmation email has been sent to {{client.email}}</p>
 				<a href="/workorder?clientid={{clientid}}">Submit another?</a>
 			{{else}}
 				<form method="post">
