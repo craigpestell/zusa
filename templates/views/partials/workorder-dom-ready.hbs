@@ -5,7 +5,7 @@
 			url: '/api/catalog',
 			dataType: 'json',
 			success: function (data, status) {
-				console.log('result:', data, 'status:', status);
+				//console.log('result:', data, 'status:', status);
 				$(this).prop('disabled', 'disabled');
 				var _this = this;
 				if(data.data && data.data.workOrders){
@@ -24,11 +24,12 @@
 						//populate form
 						var cat = window.catalog[e.target.value];
 						delete cat.client;
+						delete cat.catalog;
 						// reset form values from json object
 						$.each(cat, function(name, val){
 							var $el = $('[name="'+name+'"]'),
 									type = $el.attr('type');
-							console.log('[name="'+name+'"]', $el.length);
+							//console.log('[name="'+name+'"]', $el.length);
 							switch(type){
 								case 'checkbox':
 									$el.attr('checked', 'checked');

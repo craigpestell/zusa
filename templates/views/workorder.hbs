@@ -11,29 +11,75 @@
 			{{else}}
 				<form method="post">
 					<input type="hidden" name="action" value="catalog"/>
-					
-					
-					<label for="catalog">Catalog</label>
-					<select name="catalog">
-						<option value=""> -- none -- </option>
-					</select>
+					<div class="form-group">
+						<label for="catalog">Catalog</label>
+						<select name="catalog" class="form-control">
+							<option value=""> -- none -- </option>
+						</select>
+					</div>
 				</form>
 				
 				<form method="post">
 					<input type="hidden" name="action" value="workorder">
 					<input type="hidden" name="client" value="{{clientid}}" />
 					<div class="form-group {{#if validationErrors.description}}has-error{{/if}}">
-						<label>Description</label>
+						<label for="description">Description (*)</label>
 						<textarea name="description"  class="form-control">{{formData.[description]}}</textarea>
 					</div>
-					<div class="form-group {{#if validationErrors.dropDownField}}has-error{{/if}}">
-						<label>DropDownField</label>
-						<select name="dropDownField" class="form-control">
+					
+					<div class="form-group {{#if validationErrors.department}}has-error{{/if}}">
+						<label for="department">Department (*)</label>
+						<select name="department" class="form-control">
 							<option value="">(select one)</option>
-							<option value="1"{{#ifCond formData.[dropDownField] "==" "1"}} selected{{/ifCond}}>1</option>
-							<option value="2"{{#ifCond formData.[dropDownField] "==" "2"}} selected{{/ifCond}}>2</option>
+							{{#each data.departments}}
+								<option value="{{_id}}"{{#ifCond @root.formData.[department] "==" _id}} selected{{/ifCond}}>{{name}}</option>
+							{{/each}}
+						</select>
+					</div>
+					<div class="form-group {{#if validationErrors.country}}has-error{{/if}}">
+						<label for="country">Country</label>
+						<select name="country" class="form-control">
+							<option value="">(select one)</option>
+							{{#each data.countries}}
+								<option value="{{_id}}"{{#ifCond @root.formData.[country] "==" _id}} selected{{/ifCond}}>{{name}}</option>
+							{{/each}}
+						</select>
+					</div>
+					<div class="form-group {{#if validationErrors.city}}has-error{{/if}}">
+						<label for="city">City</label>
+						<textarea name="city"  class="form-control">{{formData.[city]}}</textarea>
+					</div>
+					<div class="form-group {{#if validationErrors.postal}}has-error{{/if}}">
+						<label for="postal">Postal</label>
+						<textarea name="postal"  class="form-control">{{formData.[postal]}}</textarea>
+					</div>
+					<div class="form-group {{#if validationErrors.location}}has-error{{/if}}">
+						<label for="location">Location</label>
+						<textarea name="location"  class="form-control">{{formData.[location]}}</textarea>
+					</div>
+					<div class="form-group {{#if validationErrors.positionTitle}}has-error{{/if}}">
+						<label for="positionTitle">Position Title</label>
+						<textarea name="positionTitle"  class="form-control">{{formData.[positionTitle]}}</textarea>
+					</div>
+					<div class="form-group {{#if validationErrors.positionSkillSet}}has-error{{/if}}">
+						<label for="positionSkillSet">Position Skill Set</label>
+						<textarea name="positionSkillSet"  class="form-control">{{formData.[positionSkillSet]}}</textarea>
+					</div>
+					<div class="form-group {{#if validationErrors.compensation}}has-error{{/if}}">
+						<label for="compensation">Compensation</label>
+						<!--['Hourly', 'Weekly', 'Monthly', 'Fixed']-->
+						<select name="compensation" class="form-control">
+							<option value="">(select one)</option>
+							<option value="Hourly"{{#ifCond @root.formData.[compensation] "==" "Hourly"}} selected{{/ifCond}}>Hourly</option>
+							<option value="Weekly"{{#ifCond @root.formData.[compensation] "==" "Weekly"}} selected{{/ifCond}}>Weekly</option>
+							<option value="Monthly"{{#ifCond @root.formData.[compensation] "==" "Monthly"}} selected{{/ifCond}}>Monthly</option>
+							<option value="Fixed"{{#ifCond @root.formData.[compensation] "==" "Fixed"}} selected{{/ifCond}}>Fixed</option>
 							
 						</select>
+					</div>
+					<div class="form-group {{#if validationErrors.compensationAmount}}has-error{{/if}}">
+						<label for="compensationAmount">Compensation Amount</label>
+						<textarea name="compensationAmount"  class="form-control">{{formData.[compensationAmount]}}</textarea>
 					</div>
 					<!--<div class="form-group {{#if validationErrors.message}}has-error{{/if}} ">
 						<label>Message</label>

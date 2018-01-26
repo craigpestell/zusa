@@ -10,10 +10,31 @@ var WorkOrder = new keystone.List('WorkOrder', {
 	drilldown: 'client'
 });
 
+/* 
+* Requestor
+* Department -dropdown
+* crountry - dropdown
+* city - dropdown
+* postal / zip - dropdown
+* location - dropdown
+* position title - memo
+* position skill set - memo
+* compensation - drop down - 1. hourly, 2 weekly, 3 monthly 4 fixed
+* compensation amount - memo
+* */
 WorkOrder.add({
-	client: {type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true},
+	client: {type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true, label: 'Requestor'},
+
 	description: {type: String, index: true, required: true, initial: true},
-	dropDownField: {type: Types.Select, options: ['1', '2']},
+	department: {type: Types.Relationship, ref: 'Department', index: true, initial: true, required: true},
+	country: {type: Types.Relationship, ref: 'Country', index: true},
+	city: {type: String},
+	postal: {type: String, label: 'Postal / Zip'},
+	location: {type: String},
+	positionTitle: {type: String},
+	positionSkillSet: {type: String},
+	compensation: {type: Types.Select, options: ['Hourly', 'Weekly', 'Monthly', 'Fixed']},
+	compensationAmount: {type: String},
 	status: {
 		type: Types.Select,
 		options: ['submitted', 'approved', 'cancelled', 'closed', 'inprogress'],
@@ -57,7 +78,7 @@ WorkOrder.schema.methods.sendNotificationEmail = function (callback) {
 
 		if (err) return callback(err);
 		keystone.list('SiteSetting').model.findOne({name: 'adminEmails'}).exec(function (err, emails) {
-			
+
 			var to = [{email: client.email, name: client.email}];
 			if (emails) {
 				emails = emails.textValue.split(',');

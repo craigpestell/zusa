@@ -35,9 +35,27 @@ exports = module.exports = function (req, res) {
 		}else{
 			next();
 		}
-
 	});
 
+	// populate departments
+	view.on('init', function (next) {
+		var q = keystone.list('Department').model.find();
+
+		q.exec(function (err, result) {
+			locals.data.departments = result;
+			next(err);
+		});
+	});
+
+	// populate countries
+	view.on('init', function (next) {
+		var q = keystone.list('Country').model.find();
+
+		q.exec(function (err, result) {
+			locals.data.countries = result;
+			next(err);
+		});
+	});
 
 	// On POST requests, add the WorkOrder item to the database
 	view.on('post', {action: 'workorder'}, function (next) {
@@ -53,7 +71,7 @@ exports = module.exports = function (req, res) {
 		WorkOrder.updateItem(newWorkOrder, req.body, function () {
 			updater.process(req.body, {
 				flashErrors: true,
-				fields: 'description, dropDownField',
+				fields: 'description, department',
 				errorMessage: 'There was a problem submitting your work order:',
 			}, function (err) {
 				if (err) {

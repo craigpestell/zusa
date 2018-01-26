@@ -16,6 +16,7 @@ exports = module.exports = function (app) {
 	app.get('/', views.index);
 	app.all('/contact', views.contact);
 	app.all('/login', views.login);
+	app.all('/logout', views.logout);
 	app.all(['/workorder'], views.workorder);
 
 	app.use('/api', function (req, res, next) {
