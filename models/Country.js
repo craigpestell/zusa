@@ -10,7 +10,8 @@ var Country = new keystone.List('Country',
 	{
 		autokey: {from: 'name', path: 'key', unique: true}, 
 		sortable: true
-	});
+	},
+);
 
 Country.relationship({path: 'workOrders', ref: 'WorkOrder', refPath: 'country'});
 Country.add({

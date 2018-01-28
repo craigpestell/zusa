@@ -1,6 +1,9 @@
 <script type="text/javascript">
 	$(document).ready(function () {
-		
+		console.log('session userid:', $.session.get('userid'));
+		if(!$.session.get('userid')){
+			window.location.href='/logout';
+		};
 		$.ajax({
 			url: '/api/catalog',
 			dataType: 'json',

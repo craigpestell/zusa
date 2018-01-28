@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
+		
+		
 		var login = function(){
 			//set cookie
 			
@@ -16,8 +18,7 @@
 				type: 'post',
 				dataType: 'json',
 				success: function (data, status) {
-					console.log('result:', data, 'status:', status);
-					document.cookie = "userid=" + data.data.id;
+					$.session.set('userid', data.data.id);
 					window.location.href = '/workorder?clientid=' + data.data.id
 				},
 				data: data
