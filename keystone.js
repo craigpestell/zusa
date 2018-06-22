@@ -30,8 +30,12 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+	'cookie secret': 'abc123'
 });
+
+keystone.set('cloudinary config', { cloud_name: 'repn', api_key: '471417893385355', api_secret: '9L0ILe9lSoMwtNhOarFYLLu1z5o' });
 keystone.import('models');
+
 keystone.set('locals', {
 	_: require('lodash'),
 	env: keystone.get('env'),
@@ -45,7 +49,6 @@ keystone.set('nav', {
 	workOrders: 'WorkOrder',
 });
 
-keystone.set('cloudinary config', { cloud_name: 'repn', api_key: '471417893385355', api_secret: '9L0ILe9lSoMwtNhOarFYLLu1z5o' });
 
 
 if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
