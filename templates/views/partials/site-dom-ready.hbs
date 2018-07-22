@@ -18,8 +18,8 @@
 				type: 'post',
 				dataType: 'json',
 				success: function (data, status) {
-					$.session.set('userid', data.data.id);
-					window.location.href = '/workorder?clientid=' + data.data.id
+					$.session.set('userid', data.client._id);
+					window.location.href = '/catalog?clientid=' + data.client._id
 				},
 				data: data
 			});

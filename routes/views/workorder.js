@@ -1,16 +1,11 @@
 var keystone = require('keystone');
 var WorkOrder = keystone.list('WorkOrder');
-var mongoose = require('mongoose');
 
 exports = module.exports = function (req, res) {
 
 	var view = new keystone.View(req, res);
 	var locals = res.locals;
 
-	if (req.query.clientid) {
-		locals.clientid = req.query.clientid;
-		console.log('clientid', locals.clientid);
-	}
 	// Set locals
 	locals.section = 'workorder';
 	// locals.workOrderTypes = WorkOrder.fields.workOrderType.ops;
@@ -20,19 +15,23 @@ exports = module.exports = function (req, res) {
 
 	locals.data = {
 		catalog: [],
-		page: {title: 'home'}
+		page: { title: 'home' },
 	};
+	if (req.params.catalogId) {
+		locals.data.catalogId = req.params.catalogId;
+		console.log('catalogId:', locals.data.catalogId);
+	}
 
 	// load the client data
 	view.on('init', function (next) {
-		if(locals.clientid){
-			var q = keystone.list('Client').model.findOne({_id: locals.clientid});
+		if (locals.clientid) {
+			var q = keystone.list('Client').model.findOne({ _id: locals.clientid });
 
 			q.exec(function (err, result) {
 				locals.client = result;
 				next(err);
 			});
-		}else{
+		} else {
 			next();
 		}
 	});
@@ -58,7 +57,7 @@ exports = module.exports = function (req, res) {
 	});
 
 	// On POST requests, add the WorkOrder item to the database
-	view.on('post', {action: 'workorder'}, function (next) {
+	view.on('post', { action: 'workorder' }, function (next) {
 
 		var newWorkOrder = new WorkOrder.model();
 		delete req.body.catalogLabel;
@@ -82,7 +81,7 @@ exports = module.exports = function (req, res) {
 				next();
 			});
 		});
-		//next();
+		// next();
 
 
 	});

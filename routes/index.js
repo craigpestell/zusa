@@ -14,19 +14,20 @@ var views = importRoutes('./views');
 exports = module.exports = function (app) {
 	// Views
 	app.get('/', views.index);
+	app.all('/catalog', views.catalog);
 	app.all('/contact', views.contact);
 	app.all('/login', views.login);
 	app.all('/logout', views.logout);
-	app.all(['/workorder'], views.workorder);
+	app.all(['/workorder', '/workorder/:catalogId'], views.workorder);
 
 	app.use('/api', function (req, res, next) {
 		res.jfin = function (err, data) {
 			console.log('err:', err, 'data:', data);
-			res.status(err ? 400 : 200)
+			res.status(err ? 400 : 200);
 			res.json({
 				error: (err && err.message) || undefined,
 				success: err ? undefined : true,
-				data: data
+				data: data,
 			});
 		};
 

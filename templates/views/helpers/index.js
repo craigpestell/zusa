@@ -326,7 +326,7 @@ module.exports = function () {
 		return obj._[underscoreMethod].format();
 	};
 
-	_helpers.json = function(context) {
+	_helpers.json = function (context) {
 		return JSON.stringify(context);
 	};
 
@@ -334,8 +334,10 @@ module.exports = function () {
 
 		switch (operator) {
 			case '==':
+// eslint-disable-next-line
 				return (v1 == v2) ? options.fn(this) : options.inverse(this);
 			case '!=':
+// eslint-disable-next-line
 				return (v1 != v2) ? options.fn(this) : options.inverse(this);
 			case '===':
 				return (v1 === v2) ? options.fn(this) : options.inverse(this);

@@ -1,11 +1,35 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		console.log('session userid:', $.session.get('userid'));
-		if(!$.session.get('userid')){
+		var clientid = $.session.get('userid');
+		if(!clientid){
 			window.location.href='/logout';
 		};
+		
+		var fillFormWithCatalog = function(catid){
+			var cat = window.catalog[catid];
+			delete cat.client;
+			delete cat.catalog;
+			// reset form values from json object
+			$.each(cat, function(name, val){
+				var $el = $('[name="'+name+'"]'),
+						type = $el.attr('type');
+				//console.log('[name="'+name+'"]', $el.length);
+				switch(type){
+					case 'checkbox':
+						$el.attr('checked', 'checked');
+						break;
+					case 'radio':
+						$el.filter('[value="'+val+'"]').attr('checked', 'checked');
+						break;
+					default:
+						$el.val(val);
+				}
+			});
+		};
+		
 		$.ajax({
-			url: '/api/catalog',
+			url: '/api/catalog?clientid=' + clientid,
 			dataType: 'json',
 			success: function (data, status) {
 				//console.log('result:', data, 'status:', status);
@@ -13,10 +37,20 @@
 				var _this = this;
 				if(data.data && data.data.workOrders){
 					window.catalog = {};
+					var $catalogSelect = $('select[name=catalog]');
+					
+					//If an ID was passed, select that workorder.
+					var workOrderIdParam = '{{@root.data.catalogId}}' || '';
 					$.each(data.data.workOrders, function(key, value)
 					{
 						window.catalog[value._id] = value;
-						$('select[name=catalog]').append('<option value=' + value._id + '>' + value.catalogLabel + '</option>');
+						$catalogSelect.append('<option value=' + value._id + '>' + value.catalogLabel + '</option>');
+						if(~workOrderIdParam.length && workOrderIdParam === value._id) {
+							$catalogSelect.find('option[value="' + value._id + '"]').attr('selected', true);
+							fillFormWithCatalog(value._id);
+						}
+						
+						console.log('wo param:', workOrderIdParam, ' current value: ', value._id)
 					});			
 					$(_this).prop('disabled', false);
 				}
@@ -24,26 +58,7 @@
 				$('select[name=catalog]').on('change', function(e){
 					
 					if(e.target.value){
-						//populate form
-						var cat = window.catalog[e.target.value];
-						delete cat.client;
-						delete cat.catalog;
-						// reset form values from json object
-						$.each(cat, function(name, val){
-							var $el = $('[name="'+name+'"]'),
-									type = $el.attr('type');
-							//console.log('[name="'+name+'"]', $el.length);
-							switch(type){
-								case 'checkbox':
-									$el.attr('checked', 'checked');
-									break;
-								case 'radio':
-									$el.filter('[value="'+val+'"]').attr('checked', 'checked');
-									break;
-								default:
-									$el.val(val);
-							}
-						});
+						fillFormWithCatalog(e.target.value);
 					}
 				});
 			}

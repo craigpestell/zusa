@@ -7,10 +7,11 @@ var Types = keystone.Field.Types;
  */
 
 var WorkOrder = new keystone.List('WorkOrder', {
-	drilldown: 'client'
+	autokey: { path: 'key', from: 'name', unique: true },
+	//drilldown: 'catalogLabel'
 });
 
-/* 
+/*
 * Requestor
 * Department -dropdown
 * crountry - dropdown
@@ -23,33 +24,38 @@ var WorkOrder = new keystone.List('WorkOrder', {
 * compensation amount - memo
 * */
 WorkOrder.add({
-	client: {type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true, label: 'Requestor'},
-
-	description: {type: String, index: true, required: true, initial: true},
-	department: {type: Types.Relationship, ref: 'Department', index: true, initial: true, required: true},
-	country: {type: Types.Relationship, ref: 'Country', index: true},
-	city: {type: String},
-	postal: {type: String, label: 'Postal / Zip'},
-	location: {type: String},
-	positionTitle: {type: String},
-	positionSkillSet: {type: String},
-	compensation: {type: Types.Select, options: ['Hourly', 'Weekly', 'Monthly', 'Fixed']},
-	compensationAmount: {type: String},
+	catalog: { type: Boolean, note: 'Use this Work Order as a Catalogue item?' },
+	client: { type: Types.Relationship, ref: 'Client', required: true, initial: true, index: true, label: 'Requestor' },
+	description: { type: String, index: true, required: true, initial: true },
+	department: { type: Types.Relationship, ref: 'Department', index: true },
+	country: { type: Types.Relationship, ref: 'Country', index: true },
+	city: { type: String },
+	postal: { type: String, label: 'Postal / Zip' },
+	location: { type: String },
+	positionTitle: { type: String },
+	positionSkillSet: { type: String },
+	compensation: { type: Types.Select, options: ['Hourly', 'Weekly', 'Monthly', 'Fixed'] },
+	compensationAmount: { type: String },
 	status: {
 		type: Types.Select,
 		options: ['submitted', 'approved', 'cancelled', 'closed', 'inprogress'],
-		default: 'submitted'
+		default: 'submitted',
 	},
-	catalog: {type: Boolean, note: 'Use this Work Order as a Catalogue item?'},
-	catalogLabel: {type: String, dependsOn: {catalog: true}}
+	name: { type: String, dependsOn: { catalog: true }, label: 'Catalog Label', index: true, unique: true },
 
 });
+
+WorkOrder.relationship({ ref: 'Client', refPath: 'catalogs', path: 'catalogs' });
 
 
 WorkOrder.schema.pre('save', function (next) {
 	this.wasNew = this.isNew;
 	next();
 });
+
+/* WorkOrder.schema.virtual('name').get(function(){
+	return 'wtf'
+});*/
 
 WorkOrder.schema.post('save', function () {
 	if (this.wasNew) {
@@ -74,16 +80,16 @@ WorkOrder.schema.methods.sendNotificationEmail = function (callback) {
 	var workorder = this;
 	var brand = keystone.get('brand');
 
-	keystone.list('Client').model.findOne({_id: workorder.client}).exec(function (err, client) {
+	keystone.list('Client').model.findOne({ _id: workorder.client }).exec(function (err, client) {
 
 		if (err) return callback(err);
-		keystone.list('SiteSetting').model.findOne({name: 'adminEmails'}).exec(function (err, emails) {
+		keystone.list('SiteSetting').model.findOne({ name: 'adminEmails' }).exec(function (err, emails) {
 
-			var to = [{email: client.email, name: client.email}];
+			var to = [{ email: client.email, name: client.email }];
 			if (emails) {
 				emails = emails.textValue.split(',');
 				emails.forEach(function (email) {
-					to.push({email: email, name: email})
+					to.push({ email: email, name: email });
 				});
 			}
 			console.log('to:', to);
@@ -106,6 +112,28 @@ WorkOrder.schema.methods.sendNotificationEmail = function (callback) {
 
 	});
 };
+
+WorkOrder.schema.pre('save', function (next) {
+	console.log(this);
+	if (this.name) {
+		this.key = this.name.replace(/\s+/g, '-').toLowerCase();
+	}
+	next();
+});
+
+WorkOrder.schema.methods.clients = function (done) {
+	return keystone.list('Client').model.find()
+		.where({
+			catalogs: {
+				$in: [this._id],
+			},
+		})
+		.exec(function (err, result) {
+			console.log('Workorder clients:', result);
+			done();
+		});
+};
+
 
 /**
  * Registration

@@ -7,14 +7,14 @@ var Types = keystone.Field.Types;
  */
 
 var SiteSetting = new keystone.List('SiteSetting', {
-	autokey: { from: 'name', path: 'key', unique: true, sortable: true}
+	autokey: { from: 'name', path: 'key', unique: true, sortable: true },
 });
 SiteSetting.defaultColumns = 'name';
 SiteSetting.add({
 	name: { type: String, required: true },
-	textValue: {type: Types.Text},
-	htmlValue: {type: Types.Html},
-	imageValue:{type: Types.CloudinaryImage,  autoCleanup : true}
+	textValue: { type: Types.Text },
+	htmlValue: { type: Types.Html },
+	imageValue: { type: Types.CloudinaryImage, autoCleanup: true },
 });
 
 SiteSetting.register();
