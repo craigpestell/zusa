@@ -37,6 +37,8 @@ keystone.set('locals', {
 	utils: keystone.utils,
 	editable: keystone.content.editable,
 });
+
+keystone.set('cors allow origin', true);
 keystone.set('routes', require('./routes'));
 
 keystone.set('nav', {

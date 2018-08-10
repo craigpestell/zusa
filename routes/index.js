@@ -34,6 +34,7 @@ exports = module.exports = function (app) {
 		next();
 	});
 
+	app.all('/api*', keystone.middleware.cors);
 	app.post('/api/login', api.client.login);
 	app.get(['/api/catalog', '/api/catalog/:id'], api.workorder.catalog);
 	/* app.post('/api/me/feedback', api.feedback);

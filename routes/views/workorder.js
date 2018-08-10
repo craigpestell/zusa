@@ -13,6 +13,11 @@ exports = module.exports = function (req, res) {
 	locals.validationErrors = {};
 	locals.workOrderSubmitted = false;
 
+	if (req.query.clientid) {
+		locals.clientid = req.query.clientid;
+		console.log('clientid', locals.clientid);
+	}
+	
 	locals.data = {
 		catalog: [],
 		page: { title: 'home' },

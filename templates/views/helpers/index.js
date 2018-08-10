@@ -327,7 +327,7 @@ module.exports = function () {
 	};
 
 	_helpers.json = function(context) {
-		return JSON.stringify(context);
+		return JSON.stringify(context,null,2);
 	};
 
 	_helpers.ifCond = function (v1, operator, v2, options) {

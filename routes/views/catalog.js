@@ -24,7 +24,7 @@ exports = module.exports = function (req, res) {
 	};
 
 
-	view.on('init', function (next) {
+	/*view.on('init', function (next) {
 		keystone.list('Client').model.find()
 			.where({
 				catalogs: {
@@ -32,16 +32,18 @@ exports = module.exports = function (req, res) {
 				},
 			})
 			.exec(function (err, result) {
-				console.log('filtered results: ', result);
+				//console.log('filtered results: ', result);
 				next();
 
 			});
-	});
+	});*/
 
 	// load the catalog data
 	view.on('init', function (next) {
+		console.log('########init');
 		var q = keystone.list('WorkOrder').model.find().where({ catalog: true });
 		if (locals.clientid) {
+			console.log('clientid: ', locals.clientid);
 			// Get all workorder catalog items for this client.
 			var qc = keystone.list('Client').model.findOne(mongoose.Types.ObjectId(locals.clientid));
 			qc.exec(function (err, result) {
